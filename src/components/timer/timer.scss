@@ -1,0 +1,25 @@
+.timer-container {
+  position: absolute;
+  top: 75px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #20b020;
+  border-radius: 50%;
+  z-index: 1;
+  left: 50%;
+  transform: translate(-50%);
+
+  font-family: "Product Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  letter-spacing: -0.165px;
+  color: white;
+  border: 1px solid silver;
+
+}
