@@ -359,6 +359,7 @@ const Game = () => {
               style={{
                 zIndex: winChair === "A" ? 1000 : 0,
               }}
+              onClick={() => handleBoardSelect("A")}
             >
               <div className="name">A</div>
 
@@ -373,6 +374,7 @@ const Game = () => {
               style={{
                 zIndex: winChair === "B" ? 1000 : 0,
               }}
+              onClick={() => handleBoardSelect("B")}
             >
               <div className="name">B</div>
 
@@ -387,6 +389,7 @@ const Game = () => {
               style={{
                 zIndex: winChair === "C" ? 1000 : 0,
               }}
+              onClick={() => handleBoardSelect("C")}
             >
               <div className="name">C</div>
 
