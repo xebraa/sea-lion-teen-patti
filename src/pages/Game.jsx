@@ -16,6 +16,7 @@ const Game = () => {
   const [selectedCoin, setSelectedCoin] = useState(0);
   const [time, setTime] = useState(0);
   const [coin, setCoin] = useState(0);
+  const [results, setResults] = useState([]);
 
   // Pod Amount
   const [bac, setBAC] = useState(0);
@@ -109,6 +110,13 @@ const Game = () => {
       setTimeout(() => setShowC(true), 3000);
       setTimeout(() => {
         setWinChair(win);
+        setResults((prev) => {
+          let a = [{ winPot: win }, ...prev];
+
+          a.pop();
+
+          return a;
+        });
 
         switch (win) {
           case "A":
@@ -195,6 +203,10 @@ const Game = () => {
     socket.on("MY_BOARD_C_COIN_CHANGED", (coin) => {
       setYPC((prev) => prev + coin);
       setCoin((prev) => prev - coin);
+    });
+
+    socket.on("ON_GET_RESULTS", (data) => {
+      setResults(data);
     });
   }, []);
 
@@ -401,36 +413,11 @@ const Game = () => {
             <div className="r3">Result: </div>
 
             <div>
-              <div className="new">
-                <img src="/img/chair-a.png" />
-              </div>
-              <div>
-                <img src="/img/chair-c.png" />
-              </div>
-              <div>
-                <img src="/img/chair-b.png" />
-              </div>
-              <div>
-                <img src="/img/chair-a.png" />
-              </div>
-              <div>
-                <img src="/img/chair-c.png" />
-              </div>
-              <div>
-                <img src="/img/chair-b.png" />
-              </div>
-              <div>
-                <img src="/img/chair-a.png" />
-              </div>
-              <div>
-                <img src="/img/chair-c.png" />
-              </div>
-              <div>
-                <img src="/img/chair-b.png" />
-              </div>
-              <div>
-                <img src="/img/chair-b.png" />
-              </div>
+              {results.map((i, idx) => (
+                <div className={`${idx === 0 ? "new" : ""}`}>
+                  <img src={`/img/chair-${i.winPot.toLowerCase()}.png`} />
+                </div>
+              ))}
             </div>
           </div>
 
