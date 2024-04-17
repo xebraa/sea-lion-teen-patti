@@ -434,14 +434,14 @@ const Game = () => {
             </div>
 
             <div className="right">
-              <div className={`${selectedCoin === 100 ? "coin active" : "coin"} ${coin < 100 && "disable"} `} onClick={() => handleBetCoinSelect(100)}>
-                100
-              </div>
               <div className={`${selectedCoin === 1000 ? "coin active" : "coin"} ${coin < 1000 && "disable"}`} onClick={() => handleBetCoinSelect(1000)}>
                 1000
               </div>
               <div className={`${selectedCoin === 10000 ? "coin active" : "coin"} ${coin < 10000 && "disable"} `} onClick={() => handleBetCoinSelect(10000)}>
                 10k
+              </div>
+                <div className={`${selectedCoin === 50000 ? "coin active" : "coin"} ${coin < 50000 && "disable"} `} onClick={() => handleBetCoinSelect(50000)}>
+                50k
               </div>
               <div className={`${selectedCoin === 100000 ? "coin active" : "coin"} ${coin < 100000 && "disable"}`} onClick={() => handleBetCoinSelect(100000)}>
                 100k
