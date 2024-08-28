@@ -18,6 +18,8 @@ const Game = () => {
   const [coin, setCoin] = useState(0);
   const [results, setResults] = useState([]);
 
+  const [roundNumber, setRoundNumber] = useState(null);
+
   // Pod Amount
   const [bac, setBAC] = useState(0);
   const [bbc, setBBC] = useState(0);
@@ -41,7 +43,9 @@ const Game = () => {
   const [kc, setKC] = useState(true);
 
   const numberFormatter = (num) => {
-    return Math.abs(num) > 999 ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + "k" : Math.sign(num) * Math.abs(num);
+    return Math.abs(num) > 999
+      ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + "k"
+      : Math.sign(num) * Math.abs(num);
   };
 
   useEffect(() => {
@@ -79,6 +83,10 @@ const Game = () => {
     socket.on("reconnect", () => {
       setLoading(false);
       setAlert("Reconnect successful.");
+    });
+
+    socket.on("roundNumber", (round) => {
+      setRoundNumber(round);
     });
 
     socket.on("connect_error", (err) => {
@@ -254,7 +262,13 @@ const Game = () => {
     <>
       <Border />
 
-      <img src="/img/close-icon.svg" className="close-btn" onClick={() => window.ReactNativeWebView.postMessage("CLOSE_GAME")} />
+      <img
+        src="/img/close-icon.svg"
+        className="close-btn"
+        onClick={() => window.ReactNativeWebView.postMessage("CLOSE_GAME")}
+      />
+
+      {roundNumber && <p className="round-number"> round: {roundNumber}</p>}
 
       {Boolean(alert) && <div className="alert">{alert}</div>}
 
@@ -293,9 +307,33 @@ const Game = () => {
                 zIndex: showa ? (ka ? 1000 : 0) : 0,
               }}
             >
-              <img className="card" src={showa ? `/img/cards/${cards[0].cards[0]}.png` : "/img/card-bg.png"} alt="" />
-              <img className="card" src={showa ? `/img/cards/${cards[0].cards[1]}.png` : "/img/card-bg.png"} alt="" />
-              <img className="card" src={showa ? `/img/cards/${cards[0].cards[2]}.png` : "/img/card-bg.png"} alt="" />
+              <img
+                className="card"
+                src={
+                  showa
+                    ? `/img/cards/${cards[0].cards[0]}.png`
+                    : "/img/card-bg.png"
+                }
+                alt=""
+              />
+              <img
+                className="card"
+                src={
+                  showa
+                    ? `/img/cards/${cards[0].cards[1]}.png`
+                    : "/img/card-bg.png"
+                }
+                alt=""
+              />
+              <img
+                className="card"
+                src={
+                  showa
+                    ? `/img/cards/${cards[0].cards[2]}.png`
+                    : "/img/card-bg.png"
+                }
+                alt=""
+              />
 
               {showa && <div className="msg">{cards[0].name}</div>}
             </div>
@@ -306,9 +344,33 @@ const Game = () => {
                 zIndex: showb ? (kb ? 1000 : 0) : 0,
               }}
             >
-              <img className="card" src={showb ? `/img/cards/${cards[1].cards[0]}.png` : "/img/card-bg.png"} alt="" />
-              <img className="card" src={showb ? `/img/cards/${cards[1].cards[1]}.png` : "/img/card-bg.png"} alt="" />
-              <img className="card" src={showb ? `/img/cards/${cards[1].cards[2]}.png` : "/img/card-bg.png"} alt="" />
+              <img
+                className="card"
+                src={
+                  showb
+                    ? `/img/cards/${cards[1].cards[0]}.png`
+                    : "/img/card-bg.png"
+                }
+                alt=""
+              />
+              <img
+                className="card"
+                src={
+                  showb
+                    ? `/img/cards/${cards[1].cards[1]}.png`
+                    : "/img/card-bg.png"
+                }
+                alt=""
+              />
+              <img
+                className="card"
+                src={
+                  showb
+                    ? `/img/cards/${cards[1].cards[2]}.png`
+                    : "/img/card-bg.png"
+                }
+                alt=""
+              />
 
               {showb && <div className="msg">{cards[1].name}</div>}
             </div>
@@ -318,9 +380,33 @@ const Game = () => {
                 zIndex: showc ? (kc ? 1000 : 0) : 0,
               }}
             >
-              <img className="card" src={showc ? `/img/cards/${cards[2].cards[0]}.png` : "/img/card-bg.png"} alt="" />
-              <img className="card" src={showc ? `/img/cards/${cards[2].cards[1]}.png` : "/img/card-bg.png"} alt="" />
-              <img className="card" src={showc ? `/img/cards/${cards[2].cards[2]}.png` : "/img/card-bg.png"} alt="" />
+              <img
+                className="card"
+                src={
+                  showc
+                    ? `/img/cards/${cards[2].cards[0]}.png`
+                    : "/img/card-bg.png"
+                }
+                alt=""
+              />
+              <img
+                className="card"
+                src={
+                  showc
+                    ? `/img/cards/${cards[2].cards[1]}.png`
+                    : "/img/card-bg.png"
+                }
+                alt=""
+              />
+              <img
+                className="card"
+                src={
+                  showc
+                    ? `/img/cards/${cards[2].cards[2]}.png`
+                    : "/img/card-bg.png"
+                }
+                alt=""
+              />
 
               {showc && <div className="msg">{cards[2].name}</div>}
             </div>
@@ -428,30 +514,68 @@ const Game = () => {
             <div className="left">
               <img className="hart" src="/img/hart.png" alt="" />
               <span className="balance">{numberFormatter(coin)}</span>{" "}
-              <a href="#" onClick={() => window.ReactNativeWebView.postMessage("OPEN_TOP_UP_SCREEN")}>
-                Top Up>
+              <a
+                href="#"
+                onClick={() =>
+                  window.ReactNativeWebView.postMessage("OPEN_TOP_UP_SCREEN")
+                }
+              >
+                Top Up
               </a>
             </div>
 
             <div className="right">
-              <div className={`${selectedCoin === 1000 ? "coin active" : "coin"} ${coin < 1000 && "disable"}`} onClick={() => handleBetCoinSelect(1000)}>
+              <div
+                className={`${selectedCoin === 1000 ? "coin active" : "coin"} ${
+                  coin < 1000 && "disable"
+                }`}
+                onClick={() => handleBetCoinSelect(1000)}
+              >
                 1000
               </div>
-              <div className={`${selectedCoin === 10000 ? "coin active" : "coin"} ${coin < 10000 && "disable"} `} onClick={() => handleBetCoinSelect(10000)}>
+              <div
+                className={`${
+                  selectedCoin === 10000 ? "coin active" : "coin"
+                } ${coin < 10000 && "disable"} `}
+                onClick={() => handleBetCoinSelect(10000)}
+              >
                 10k
               </div>
-                <div className={`${selectedCoin === 50000 ? "coin active" : "coin"} ${coin < 50000 && "disable"} `} onClick={() => handleBetCoinSelect(50000)}>
+              <div
+                className={`${
+                  selectedCoin === 50000 ? "coin active" : "coin"
+                } ${coin < 50000 && "disable"} `}
+                onClick={() => handleBetCoinSelect(50000)}
+              >
                 50k
               </div>
-              <div className={`${selectedCoin === 100000 ? "coin active" : "coin"} ${coin < 100000 && "disable"}`} onClick={() => handleBetCoinSelect(100000)}>
+              <div
+                className={`${
+                  selectedCoin === 100000 ? "coin active" : "coin"
+                } ${coin < 100000 && "disable"}`}
+                onClick={() => handleBetCoinSelect(100000)}
+              >
                 100k
               </div>
 
-              <a href="#" className="history" onClick={() => window.ReactNativeWebView.postMessage("OPEN_TEEN_PATTI_HISTORY")}></a>
+              <a
+                href="#"
+                className="history"
+                onClick={() =>
+                  window.ReactNativeWebView.postMessage(
+                    "OPEN_TEEN_PATTI_HISTORY"
+                  )
+                }
+              ></a>
             </div>
           </div>
 
-          <div className="rules-btn" onClick={() => window.ReactNativeWebView.postMessage("OPEN_TEEN_PATTI_RULES")}>
+          <div
+            className="rules-btn"
+            onClick={() =>
+              window.ReactNativeWebView.postMessage("OPEN_TEEN_PATTI_RULES")
+            }
+          >
             Rules
           </div>
         </>
