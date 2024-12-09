@@ -5,6 +5,11 @@ import Border from "../components/Border";
 import Timer from "../components/timer/Timer";
 import { io } from "socket.io-client";
 
+// const socket = io("http://localhost:5001/teen-patti", {
+//   auth: {
+//     UID: new URLSearchParams(window.location.search).get("uid"),
+//   },
+// });
 const socket = io("https://games.sealion.live/teen-patti", {
   auth: {
     UID: new URLSearchParams(window.location.search).get("uid"),
@@ -450,7 +455,7 @@ const Game = () => {
               <div className="name">A</div>
 
               <div className="amount">
-                {/* <div className="pot">Pot: {numberFormatter(bac)}</div> */}
+                <div className="pot">Pot: {numberFormatter(bac)}</div>
                 <div className="you">You: {numberFormatter(ypa)}</div>
               </div>
             </div>
@@ -465,7 +470,7 @@ const Game = () => {
               <div className="name">B</div>
 
               <div className="amount">
-                {/* <div className="pot">Pot: {numberFormatter(bbc)}</div> */}
+                <div className="pot">Pot: {numberFormatter(bbc)}</div>
                 <div className="you">You: {numberFormatter(ypb)}</div>
               </div>
             </div>
@@ -480,7 +485,7 @@ const Game = () => {
               <div className="name">C</div>
 
               <div className="amount">
-                {/* <div className="pot">Pot: {numberFormatter(bcc)}</div> */}
+                <div className="pot">Pot: {numberFormatter(bcc)}</div>
                 <div className="you">You: {numberFormatter(ypc)}</div>
               </div>
             </div>
