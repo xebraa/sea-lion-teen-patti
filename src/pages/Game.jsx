@@ -81,7 +81,6 @@ const Game = () => {
   useEffect(() => {
     socket.on("connect", () => {
       setLoading(false);
-
       console.log("Server Collected.");
     });
 
