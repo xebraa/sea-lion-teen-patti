@@ -92,6 +92,7 @@ const Game = () => {
     socket.on("roundNumber", (round) => {
       setRoundNumber(round);
     });
+    //for build
 
     socket.on("connect_error", (err) => {
       setLoading(true);
